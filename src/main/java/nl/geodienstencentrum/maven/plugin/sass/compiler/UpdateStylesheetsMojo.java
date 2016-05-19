@@ -67,8 +67,8 @@ public class UpdateStylesheetsMojo extends AbstractSassMojo {
 		// build sass script
 		final StringBuilder sassBuilder = new StringBuilder();
 		this.buildBasicSassScript(sassBuilder);
-		sassBuilder.append("Sass::Plugin.update_stylesheets");
 		final String sassScript = sassBuilder.toString();
+                System.out.println(sassScript);
 
 		// ...and execute
 		this.executeSassScript(sassScript);

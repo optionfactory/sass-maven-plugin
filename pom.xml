@@ -22,7 +22,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>nl.geodienstencentrum.maven</groupId>
 	<artifactId>sass-maven-plugin</artifactId>
-	<version>2.19-SNAPSHOT</version>
+	<version>2.19-OPFA</version>
 	<packaging>maven-plugin</packaging>
 	<name>Sass Compiler Plugin</name>
 	<description>A Maven Plugin that compiles Sass files, optionally using the Compass framework.</description>
@@ -562,25 +562,7 @@
 					</doapOptions>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<failIfNoTests>true</failIfNoTests>
-					<includes>
-						<include>**/*IntegrationTest.java</include>
-					</includes>
-					<argLine>${failsafeArgLine}</argLine>
-					<skipTests>${skip.integration.tests}</skipTests>
-				</configuration>
-			</plugin>
+			
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>

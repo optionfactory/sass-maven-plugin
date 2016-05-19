@@ -77,20 +77,19 @@ public class Resource {
 		scanner.addDefaultExcludes();
 		scanner.scan();
 
-		result.put(FilenameUtils.separatorsToUnix(sourceDirectory.toString()),
-		        FilenameUtils.separatorsToUnix(this.destination.toString()));
-
-		for (final String included : scanner.getIncludedDirectories()) {
+		for (final String included : scanner.getIncludedFiles()) {
 			if (!included.isEmpty()) {
 				final String subdir = StringUtils.difference(
 				        sourceDirectory.toString(), included);
 
 				final File sourceDir = new File(sourceDirectory, included);
-
-				File destDir = new File(this.destination, subdir);
-				if (this.relativeOutputDirectory != null
-				        && !this.relativeOutputDirectory.isEmpty()) {
-					destDir = new File(destDir, this.relativeOutputDirectory);
+                                final File destDir;
+                                if (this.relativeOutputDirectory != null
+                                        && !this.relativeOutputDirectory.isEmpty()) {
+                                    final File relativeDir = new File(this.destination, this.relativeOutputDirectory);
+				    destDir = new File(relativeDir, subdir.replaceAll("\\.s[ac]ss", ".css"));
+                                } else {
+                                    destDir = new File(this.destination, subdir.replaceAll("\\.s[ac]ss", ".css"));
 				}
 
 				result.put(

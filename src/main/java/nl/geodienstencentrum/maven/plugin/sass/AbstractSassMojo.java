@@ -342,11 +342,11 @@ public abstract class AbstractSassMojo extends AbstractMojo {
 		final Iterator<Entry<String, String>> templateLocations = this
 		        .getTemplateLocations();
 		if (templateLocations.hasNext()) {
-			final Entry<String, String> location = templateLocations.next();
-			this.sassOptions.put("template_location",
-			                     "'" + location.getKey() + "'");
-			this.sassOptions.put("css_location",
-			                     "'" + location.getValue() + "'");
+			// final Entry<String, String> location = templateLocations.next();
+			// this.sassOptions.put("template_location",
+                        //			                     "'" + location.getKey() + "'");
+			//this.sassOptions.put("css_location",
+			//                     "'" + location.getValue() + "'");
 		}
 
 		// If not explicitly set place the cache location in the target dir
@@ -375,11 +375,13 @@ public abstract class AbstractSassMojo extends AbstractMojo {
 
 		// add remaining template locations with 'add_template_location' (need
 		// to be done after options.merge)
+                
+                List<String[]> locations = new ArrayList<String[]>();
 		while (templateLocations.hasNext()) {
 			final Entry<String, String> location = templateLocations.next();
-			sassScript.append("Sass::Plugin.add_template_location('")
-			        .append(location.getKey()).append("', '")
-			        .append(location.getValue()).append("')\n");
+			locations.add(new String[]{
+			        location.getKey(),
+			        location.getValue()});
 		}
 
 		if (this.useBourbon) {
@@ -392,6 +394,8 @@ public abstract class AbstractSassMojo extends AbstractMojo {
                     .append("/app/assets/stylesheets', '")
                     .append(destination).append("')\n");
 		}
+                
+                
 
 		// set up sass compiler callback for reporting
 		sassScript
@@ -415,6 +419,22 @@ public abstract class AbstractSassMojo extends AbstractMojo {
 				sassScript.append("pp Compass::configuration\n");
 			}
 		}
+                
+               sassScript.append("Sass::Plugin.update_stylesheets([");
+               
+               for (int index = 0; index != locations.size(); ++index) {
+                   final String[] locPair = locations.get(index);
+                   if (index > 0) {
+                       sassScript.append(",");
+                   }
+                   sassScript.append("['")
+                           .append(locPair[0])
+                           .append("','")
+                           .append(locPair[1])
+                           .append("']");
+                   
+               }
+               sassScript.append("])");
 	}
 
 	/**
