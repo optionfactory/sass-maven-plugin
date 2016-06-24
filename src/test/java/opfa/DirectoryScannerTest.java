@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package opfa;
 
 import java.io.File;
@@ -12,12 +7,14 @@ import nl.geodienstencentrum.maven.plugin.sass.Resource;
 import org.apache.maven.model.FileSet;
 import org.apache.maven.plugin.logging.Log;
 import org.codehaus.plexus.util.DirectoryScanner;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  *
  * @author sbaruzza
  */
+@Ignore
 public class DirectoryScannerTest {
 
     @Test
